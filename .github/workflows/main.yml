@@ -54,5 +54,7 @@ jobs:
           npm run build -- --prod
 
       - name: Deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB_ACTION }}
         run: |
           npm run deploy
