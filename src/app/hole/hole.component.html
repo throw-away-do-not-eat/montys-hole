@@ -1,0 +1,34 @@
+<div class="header">
+  <ng-container *ngIf="stage === 'first'">
+    1000 дверей, за одной кошкодевка, за всеми остальными - анальное
+    изнасилование от Вазгена
+  </ng-container>
+  <ng-container *ngIf="stage === 'second'">
+    Так уж и быть, я открою все двери с Вазгеном, кроме той которую ты выбрал.
+    Если не веришь в свою первую попытку - можешь сменить дверь
+  </ng-container>
+  <ng-container *ngIf="stage === 'reveal'">
+    <ng-container *ngIf="lastWin; else loss"> Кошкодевка твоя!</ng-container>
+    <ng-template #loss>Ну... Жопа когда-нибудь зарастёт, правда?</ng-template>
+    <button (click)="reset()">Ещё разок?</button>
+  </ng-container>
+</div>
+<div class="doors">
+  <div
+    class="door"
+    [class.selected]="door.selected"
+    [class.closed]="!door.opened"
+    [class.vasgen]="door.opened && !door.win"
+    [class.catgirl]="door.opened && door.win"
+    *ngFor="let door of doors"
+    (click)="nextStage(door)"
+  >
+    <!-- <ng-container *ngIf="door.opened; else closed">
+      <ng-container *ngIf="door.win; else rape"> :3 </ng-container>
+      <ng-template #rape> 8===D </ng-template>
+    </ng-container>
+    <ng-template #closed>DOOR</ng-template> -->
+  </div>
+</div>
+
+Кошкодевок: {{ catGirls }} Изнасилований: {{ analRapes }}
