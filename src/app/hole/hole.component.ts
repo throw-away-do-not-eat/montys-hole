@@ -16,7 +16,9 @@ export class HoleComponent implements OnInit {
   catGirls = 0;
   lastWin = false;
 
-  doors = HoleComponent.generateDoors();
+  doorNumber = 1000;
+
+  doors = this.generateDoors();
 
   stage: 'first' | 'second' | 'reveal' = 'first';
 
@@ -31,9 +33,14 @@ export class HoleComponent implements OnInit {
     switch (this.stage) {
       case 'first':
         door.selected = true;
-        this.doors
-          .filter(({ selected, win }) => !selected && !win)
+        const doorsToOpen = this.doors.filter(({ selected, win }) => !selected && !win);
+        doorsToOpen
           .forEach((door) => (door.opened = true));
+        if (doorsToOpen.length === this.doorNumber - 1) {
+          // Упс, игрок сразу попал на приз и мы открыли лишка дверей
+          // А по условию одну ведущий должен оставить закрытой
+          doorsToOpen[HoleComponent.genInt(doorsToOpen.length)].opened = false;
+        }
         this.stage = 'second';
         break;
       case 'second':
@@ -52,17 +59,27 @@ export class HoleComponent implements OnInit {
     }
   }
 
+  setDoors(d: any) {
+    console.log(d);
+    this.doorNumber = d;
+    this.reset();
+  }
+
   reset() {
-    this.doors = HoleComponent.generateDoors();
+    this.doors = this.generateDoors();
     this.stage = 'first';
   }
 
-  private static generateDoors(): Door[] {
+  private generateDoors(): Door[] {
     const doors: Door[] = [];
-    const catGirl = Math.floor(Math.random() * 1000); // 0 - 999
-    for (let i = 0; i < 1000; i++) {
+    const catGirl = HoleComponent.genInt(this.doorNumber); // 0 - this.doorNumber
+    for (let i = 0; i < this.doorNumber; i++) {
       doors.push({ win: i === catGirl, selected: false, opened: false });
     }
     return doors;
+  }
+
+  private static genInt(max: number) { // [0..max-1)
+    return Math.floor(Math.random() * max)
   }
 }
