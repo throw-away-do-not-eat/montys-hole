@@ -81,7 +81,7 @@ export class HoleComponent implements OnInit {
   }
 
   private static genInt(max: number) {
-    // [0..max-1)
+    // [0..max-1]
     return Math.floor(Math.random() * max);
   }
 }
