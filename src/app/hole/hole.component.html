@@ -19,7 +19,7 @@
     <button (click)="reset()">Ещё разок?</button>
   </ng-container>
 </div>
-<div class="doors">
+<div class="doors" *ngIf="doorNumber >= 3; else wtf">
   <div
     class="door"
     [class.selected]="door.selected"
@@ -36,5 +36,16 @@
     <ng-template #closed>DOOR</ng-template> -->
   </div>
 </div>
-
-Кошкодевок: {{ catGirls }} Изнасилований: {{ analRapes }}
+<ng-template #wtf>
+  <div *ngIf="doorNumber === 1">
+    За дверью Вазген ебёт кошкодевку, я не буду её открывать.
+  </div>
+  <div *ngIf="doorNumber === 0">
+    И что ты чтоишь тут как фуфел? Дверей нет, шоу закрылось.
+  </div>
+  <div *ngIf="doorNumber < 0">
+    Шел бы ты отсюда, сейчас придёт дверная мафия и будет выбивать из меня
+    долги.
+  </div>
+</ng-template>
+<span>Кошкодевок: {{ catGirls }} Изнасилований: {{ analRapes }}</span>

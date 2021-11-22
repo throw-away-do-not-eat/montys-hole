@@ -33,9 +33,10 @@ export class HoleComponent implements OnInit {
     switch (this.stage) {
       case 'first':
         door.selected = true;
-        const doorsToOpen = this.doors.filter(({ selected, win }) => !selected && !win);
-        doorsToOpen
-          .forEach((door) => (door.opened = true));
+        const doorsToOpen = this.doors.filter(
+          ({ selected, win }) => !selected && !win
+        );
+        doorsToOpen.forEach((door) => (door.opened = true));
         if (doorsToOpen.length === this.doorNumber - 1) {
           // Упс, игрок сразу попал на приз и мы открыли лишка дверей
           // А по условию одну ведущий должен оставить закрытой
@@ -59,8 +60,7 @@ export class HoleComponent implements OnInit {
     }
   }
 
-  setDoors(d: any) {
-    console.log(d);
+  setDoors(d: number) {
     this.doorNumber = d;
     this.reset();
   }
@@ -73,13 +73,15 @@ export class HoleComponent implements OnInit {
   private generateDoors(): Door[] {
     const doors: Door[] = [];
     const catGirl = HoleComponent.genInt(this.doorNumber); // 0 - this.doorNumber
+    console.log(`Кошкодевка за дверью ${catGirl}`);
     for (let i = 0; i < this.doorNumber; i++) {
       doors.push({ win: i === catGirl, selected: false, opened: false });
     }
     return doors;
   }
 
-  private static genInt(max: number) { // [0..max-1)
-    return Math.floor(Math.random() * max)
+  private static genInt(max: number) {
+    // [0..max-1)
+    return Math.floor(Math.random() * max);
   }
 }
