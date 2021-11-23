@@ -26,14 +26,10 @@
     [class.closed]="!door.opened"
     [class.vasgen]="door.opened && !door.win"
     [class.catgirl]="door.opened && door.win"
-    *ngFor="let door of doors"
+    *ngFor="let door of doors; let i = index"
     (click)="nextStage(door)"
   >
-    <!-- <ng-container *ngIf="door.opened; else closed">
-      <ng-container *ngIf="door.win; else rape"> :3 </ng-container>
-      <ng-template #rape> 8===D </ng-template>
-    </ng-container>
-    <ng-template #closed>DOOR</ng-template> -->
+    <span class="door-num">{{ i }}</span>
   </div>
 </div>
 <ng-template #wtf>
